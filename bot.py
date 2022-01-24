@@ -102,15 +102,16 @@ async def play(ctx, url : str):
     song_there = os.path.isfile("song.mp3")
     try:
         if song_there:
+            # print('song detected')
             os.remove("song.mp3")
     except PermissionError:
         await ctx.send("Wait for the current playing music to end or use the 'stop' command")
         return
-
+    
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name='General')
     await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-    
+
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -124,6 +125,7 @@ async def play(ctx, url : str):
     for file in os.listdir("./"):
         if file.endswith(".mp3"):
             os.rename(file, "song.mp3")
+
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
 
 # Play a specific song
