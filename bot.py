@@ -1,3 +1,4 @@
+from re import L
 import discord
 from discord.ext import commands, tasks
 from itertools import cycle
@@ -10,6 +11,7 @@ import fetchTrends
 import random
 import content_db 
 from secrets import secret_token
+import time
 
 client = commands.Bot(command_prefix="kye, ")
 status = cycle(["your mum all night", "you", "your best friend", "your whole family"])
@@ -124,6 +126,27 @@ async def play(ctx, url : str):
             os.rename(file, "song.mp3")
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
 
+# Play a specific song
+@client.command()
+async def win(ctx):
+    # # play song
+    # song_there = os.path.isfile("vGvN.mp3")
+    # try:
+    #     if not song_there:
+    #         ctx.send("nothing found matchs what you are looking for.")
+    # except PermissionError:
+    #     await ctx.send("Wait for the current playing music to end or use the 'stop' command")
+    #     return
+
+    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name='General')
+    await voiceChannel.connect()
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    
+    voice.play(discord.FFmpegPCMAudio("songs/vGvN.mp3"))
+    print("voice called")
+    time.sleep(15)
+    print("10 seocnds complete")
+    await voice.disconnect()
 
 # Leave Voice Channel
 @client.command()
