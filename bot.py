@@ -128,7 +128,7 @@ async def play(ctx, url : str):
 
 # Play a specific song
 @client.command()
-async def win(ctx):
+async def very(ctx):
     # # play song
     # song_there = os.path.isfile("vGvN.mp3")
     # try:
@@ -144,8 +144,20 @@ async def win(ctx):
     
     voice.play(discord.FFmpegPCMAudio("songs/vGvN.mp3"))
     print("voice called")
-    time.sleep(15)
-    print("10 seocnds complete")
+    time.sleep(10)
+    await voice.disconnect()
+
+# Play a specific song
+@client.command()
+async def peanut(ctx):
+
+    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name='General')
+    await voiceChannel.connect()
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    
+    voice.play(discord.FFmpegPCMAudio("songs/nothnButaPeanut.mp3"))
+    print("voice called")
+    time.sleep(10)
     await voice.disconnect()
 
 # Leave Voice Channel
